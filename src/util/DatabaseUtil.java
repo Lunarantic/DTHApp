@@ -26,7 +26,7 @@ public class DatabaseUtil {
 		}
 	}
 	
-	public static Connection connection = null;
+	private static Connection connection = null;
 	
 	public static void setConnection() {
 		try {
@@ -47,7 +47,7 @@ public class DatabaseUtil {
 		}
 	}
 
-	public static Class<?>[] parseResultSet(ResultSet resultSet, Class<?> obj) throws SQLException,
+	private static Class<?>[] parseResultSet(ResultSet resultSet, Class<?> obj) throws SQLException,
 	InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 	NoSuchMethodException, SecurityException {
 		ResultSetMetaData metaData = resultSet.getMetaData();
