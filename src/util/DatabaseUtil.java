@@ -188,4 +188,28 @@ public class DatabaseUtil {
 			DatabaseUtil.close(null, preparedStatement);
 		}
 	}
+	
+	public static Connection getConnection() {
+		return connection;
+	}
+	
+	public static ResultSet getResultSet(String query, Object[] paras) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = connection.prepareStatement(query);
+			int i = 1;
+			for (Object obj: paras) {
+				if (obj instanceof String) ps.setString(i++, (String) obj);
+				else if (obj instanceof Integer || obj instanceof Long) ps.setLong(i++, (Long) obj);
+				else if (obj instanceof Float || obj instanceof Double) ps.setDouble(i++, (Double) obj);
+			}
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rs;
+	}
 }
