@@ -21,5 +21,3 @@ select * from SetUpBoxTypesBox;
 select * from SetUpBoxTypesBox where billingType = 'Post Paid' AND stbtype = 'Standard';
 
 
-
-
