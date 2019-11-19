@@ -1,7 +1,7 @@
 create sequence SETUPBOXINV_SEQ start with 1 increment by 1 nocache nocycle;
 
 create table SETUPBOXINVENTORY (
-	SetUpBoxID number (10,0) primary key,
+	SetUpBoxID number (10,0) primary key,	
 	TypeID number (3,0) not null,
 	SerialNo nvarchar2 (9) not null,
 	MACID nvarchar2 (19) not null,

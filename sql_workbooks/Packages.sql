@@ -1,4 +1,4 @@
-create table Packages(id NUMBER,
+create table Packages(id NUMBER primary key,
                       name varchar(20),
                       category varchar(20),
                       chargingtype number,
