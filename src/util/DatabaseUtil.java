@@ -193,23 +193,27 @@ public class DatabaseUtil {
 		return connection;
 	}
 	
-	public static ResultSet getResultSet(String query, Object[] paras) {
+	public static Class<?>[] getResultSet(String query, Object[] paras, Class<?> obj) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		Class<?>[] parsedResultSet = null;
 		
 		try {
 			ps = connection.prepareStatement(query);
 			int i = 1;
-			for (Object obj: paras) {
-				if (obj instanceof String) ps.setString(i++, (String) obj);
-				else if (obj instanceof Integer || obj instanceof Long) ps.setLong(i++, (Long) obj);
-				else if (obj instanceof Float || obj instanceof Double) ps.setDouble(i++, (Double) obj);
+			for (Object para: paras) {
+				if (para instanceof String) ps.setString(i++, (String) para);
+				else if (para instanceof Integer || para instanceof Long) ps.setLong(i++, (Long) para);
+				else if (para instanceof Float || para instanceof Double) ps.setDouble(i++, (Double) para);
 			}
 			rs = ps.executeQuery();
-		} catch (SQLException e) {
+			parsedResultSet = parseResultSet(rs, obj);
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close(rs, ps);
 		}
 		
-		return rs;
+		return parsedResultSet;
 	}
 }
