@@ -4,4 +4,15 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>Main</servlet-name>
+  	<servlet-class>servlets.Main</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Main</servlet-name>
+  	<url-pattern>/main</url-pattern>
+  </servlet-mapping>
 </web-app>
