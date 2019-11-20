@@ -1,126 +1,109 @@
-package src.pojo;
+package pojo;
 
 public class StbTypePojo {
 
+	private Integer id;
 	private String stbType;
 	private String stbFeatures;
 	private String dimensions;
-	private long price;
-	private long installationCharges;
-	private long upgradtionCharges;
-	private long discount;
+	private Integer price;
+	private Integer installationCharges;
+	private Integer upgradtionCharges;
+	private Integer discount;
 	private String billingType;
-	private long refundableAmount;
+	private Integer refundableAmount;
 	
-	/**
-	 * @return the stbType
-	 */
+	private StbTypePojo() {}
+	
+	public StbTypePojo(Integer id, String type, String features, String dim, Integer price, Integer instChrg, Integer upgrdChrg, Integer discount,
+						String billType, Integer refund) {
+		this();
+		this.id = id;
+		stbType = type;
+		stbFeatures = features;
+		dimensions = dim;
+		this.price = price;
+		installationCharges = instChrg;
+		upgradtionCharges = upgrdChrg;
+		this.discount = discount;
+		billingType = billType;
+		refundableAmount = refund;
+	}
+	
 	public String getStbType() {
 		return stbType;
 	}
-	/**
-	 * @param stbType the stbType to set
-	 */
+
 	public void setStbType(String stbType) {
 		this.stbType = stbType;
 	}
 	
-	/**
-	 * @return the dimensions
-	 */
 	public String getDimensions() {
 		return dimensions;
 	}
-	/**
-	 * @param dimensions the dimensions to set
-	 */
+
 	public void setDimensions(String dimensions) {
 		this.dimensions = dimensions;
 	}
 	
-	/**
-	 * @return the price
-	 */
 	public long getPrice() {
 		return price;
 	}
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(long price) {
+
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 	
-	/**
-	 * @return the installationCharges
-	 */
 	public long getInstallationCharges() {
 		return installationCharges;
 	}
-	/**
-	 * @param installationCharges the installationCharges to set
-	 */
-	public void setInstallationCharges(long installationCharges) {
+
+	public void setInstallationCharges(Integer installationCharges) {
 		this.installationCharges = installationCharges;
 	}
 	
-	/**
-	 * @return the upgradtionCharges
-	 */
 	public long getUpgradtionCharges() {
 		return upgradtionCharges;
 	}
-	/**
-	 * @param upgradtionCharges the upgradtionCharges to set
-	 */
-	public void setUpgradtionCharges(long upgradtionCharges) {
+
+	public void setUpgradtionCharges(Integer upgradtionCharges) {
 		this.upgradtionCharges = upgradtionCharges;
 	}
 	
-	/**
-	 * @return the discount
-	 */
 	public long getDiscount() {
 		return discount;
 	}
-	/**
-	 * @param discount the discount to set
-	 */
-	public void setDiscount(long discount) {
+
+	public void setDiscount(Integer discount) {
 		this.discount = discount;
 	}
 	
-	/**
-	 * @return the billingType
-	 */
 	public String getBillingType() {
 		return billingType;
 	}
-	/**
-	 * @param billingType the billingType to set
-	 */
+
 	public void setBillingType(String billingType) {
 		this.billingType = billingType;
 	}
 	
-	/**
-	 * @return the refundableAmount
-	 */
 	public long getRefundableAmount() {
 		return refundableAmount;
 	}
-	/**
-	 * @param refundableAmount the refundableAmount to set
-	 */
-	public void setRefundableAmount(long refundableAmount) {
+
+	public void setRefundableAmount(Integer refundableAmount) {
 		this.refundableAmount = refundableAmount;
 	}
+	
 	public String getStbFeatures() {
 		return stbFeatures;
 	}
+	
 	public void setStbFeatures(String stbFeatures) {
 		this.stbFeatures = stbFeatures;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return id.toString();
+	}
 }
