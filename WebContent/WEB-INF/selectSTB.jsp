@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-<%@ page import ="src.util.*, java.sql.*, src.queries.*, src.pojo.*" %>
+<%@ page import ="util.*, java.sql.*, queries.*, pojo.*" %>
 
 <!DOCTYPE html>
 
@@ -17,12 +17,8 @@
 	<br>
 	
 	<div>
-	<form method = "get" action="selectSTB.jsp">
+	<form method = "get" action="/DTHServices/search">
 	
-	<% 
-		Connection conn = DatabaseUtil.getConnection();
-		
-	%>
 	<table>
 	<tr>
 		<td>
@@ -41,9 +37,6 @@
 		</select>
 		</td>
 
-		<%
-			StbTypePojo stbTypePojo = StbSearch.getSTBType(request.getParameter("paymentMethod"), request.getParameter("stbtype"));
-		%>
 
 		<td>
 		<button type = "submit">Search</button>
@@ -53,6 +46,11 @@
 	</form>
 	</div>
 	
+	<%
+	if (null != request.getParameter("paymentMethod") && null != request.getParameter("stbtype")) {
+		StbTypePojo stbTypePojo = StbSearch.getSTBType(request.getParameter("paymentMethod"), request.getParameter("stbtype"));
+		if (stbTypePojo != null) {
+	%>
 	<div>
 	<table>
 		<tr>
@@ -102,5 +100,9 @@
 		
 	</table>
 	</div>
+	
+	<% }
+	} %>
+	
 	</body>
 </html>
