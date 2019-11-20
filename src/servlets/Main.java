@@ -55,6 +55,22 @@ public class Main extends HttpServlet {
 				response.addCookie(loginCookie);
 				serve("/jsp/login_success.jsp", request, response);
 			}
+		} else if (action.equals("home")) {
+			String target = request.getParameter("target");
+			
+			if (target == null) {
+				serve("/jsp/login_success.jsp", request, response);
+			} else if (target.equals("buystb")) {
+				serve("/jsp/buystb.jsp", request, response);
+			} else if (target.equals("buypkg")) {
+				serve("/jsp/buypackage.jsp", request, response);
+			} else if (target.equals("viewbills")) {
+				serve("/jsp/viewbills.jsp", request, response);
+			} else {
+				serve("/jsp/login_success.jsp", request, response);
+			}
+		} else if (action.equals("logout")) {
+			serve("/jsp/index.jsp", request, response);
 		} else {
 			serve("/jsp/index.jsp", request, response);
 		}

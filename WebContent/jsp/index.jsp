@@ -10,7 +10,7 @@
 	</head>
 			
 	<body>
-		<form action="./main" method = "post">
+		<form action="./" method = "post">
 			<label>Username</label>
 			<input type = "text" name = "username">
 
