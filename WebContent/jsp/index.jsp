@@ -20,7 +20,7 @@
 			<input type = "password" name = "password">
 			
 			<br>
-
+			<input name="action" value="login" hidden>
 			<button type = "submit">Submit</button>
 			<button type = "reset">Reset</button>
 		</form>
