@@ -6,9 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import config.Config;
 
@@ -45,59 +45,6 @@ public class DatabaseUtil {
 			}
 			connection = null;
 		}
-	}
-
-	private static Class<?>[] parseResultSet(ResultSet resultSet, Class<?> obj) throws SQLException,
-	InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-	NoSuchMethodException, SecurityException {
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		Class<?> cls[] = new Class[metaData.getColumnCount()];
-		
-		
-		for (int i = 0; i < cls.length;) {
-			switch (metaData.getColumnType(i)) {
-				case Types.BIGINT:
-				case Types.INTEGER:
-				case Types.TINYINT:
-					cls[++i] = Integer.class;
-					break;
-					
-				case Types.VARCHAR:
-				case Types.NVARCHAR:
-				case Types.LONGNVARCHAR:
-					cls[i] = String.class;
-					break;
-					
-				case Types.FLOAT:
-				case Types.DOUBLE:
-				case Types.DECIMAL:
-				case Types.NUMERIC:
-					cls[i] = Double.class;
-					break;
-					
-				case Types.DATE:
-				case Types.TIME:
-				case Types.TIMESTAMP:
-					cls[i] = String.class;
-					break;
-	
-				default:
-					break;
-			}
-			
-		}
-		
-		Object[] initargs;
-		Class<?>[] res = new Class<?>[resultSet.getFetchSize()];
-		Constructor<?> constructor = obj.getConstructor(cls);
-		
-		for (int i = 1; resultSet.next(); ++i) {
-			initargs = new Object[cls.length];
-			for (int j = 0; j < cls.length; ++j) initargs[j] = resultSet.getObject(i, cls[j]);
-			res[i] = (Class<?>) constructor.newInstance(initargs);
-		}
-		
-		return res;
 	}
 	
 	public static boolean checkFor(Check checkFor, String name) {
@@ -193,10 +140,10 @@ public class DatabaseUtil {
 		return connection;
 	}
 	
-	public static Class<?>[] getResultSet(String query, Object[] paras, Class<?> obj) {
+	public static List<Object> getResultSet(String query, Object[] paras, Constructor<?> constructor) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Class<?>[] parsedResultSet = null;
+		List<Object> parsedResultSet = null;
 		
 		try {
 			ps = connection.prepareStatement(query);
@@ -207,7 +154,7 @@ public class DatabaseUtil {
 				else if (para instanceof Float || para instanceof Double) ps.setDouble(i++, (Double) para);
 			}
 			rs = ps.executeQuery();
-			parsedResultSet = parseResultSet(rs, obj);
+			parsedResultSet = parseResultSet(rs, constructor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -215,5 +162,24 @@ public class DatabaseUtil {
 		}
 		
 		return parsedResultSet;
+	}
+	
+	private static List<Object> parseResultSet(ResultSet resultSet, Constructor<?> constructor) throws SQLException,
+	InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+	NoSuchMethodException, SecurityException {
+		Class<?> cls[] = constructor.getParameterTypes();
+		
+		Object[] initargs;
+		List<Object> res = new ArrayList<>(resultSet.getFetchSize());
+		
+		while (resultSet.next()) {
+			initargs = new Object[cls.length];
+			for (int j = 1; j <= cls.length; ++j) {
+				initargs[j-1] = resultSet.getObject(j, cls[j-1]);
+			}
+			res.add(constructor.newInstance(initargs));
+		}
+		
+		return res;
 	}
 }
