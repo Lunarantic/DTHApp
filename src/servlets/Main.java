@@ -26,6 +26,14 @@ public class Main extends HttpServlet {
 		DatabaseUtil.closeConnection();
 	}
 
+	private void serve(String resource, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getSession().getServletContext().getRequestDispatcher(resource).forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -34,21 +42,21 @@ public class Main extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if (action == null) {
-			request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+			serve("/jsp/index.jsp", request, response);
 		} else if (action.equals("login")) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
 			if(username.isEmpty() || password.isEmpty()) {
-				request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+				serve("/jsp/index.jsp", request, response);
 			} else {
 				Cookie loginCookie = new Cookie("username",username);
 				loginCookie.setMaxAge(30*60); // 30 mins
 				response.addCookie(loginCookie);
-				request.getSession().getServletContext().getRequestDispatcher("/jsp/login_success.jsp").forward(request, response);
+				serve("/jsp/login_success.jsp", request, response);
 			}
 		} else {
-			request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+			serve("/jsp/index.jsp", request, response);
 		}
 	}
 }
