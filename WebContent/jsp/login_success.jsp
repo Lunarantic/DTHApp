@@ -6,6 +6,7 @@
 <meta charset="ISO-8859-1">
 <title>Logged In</title>
 </head>
+<body>
 <%
 String userName = null;
 String sessionID = null;
@@ -20,6 +21,6 @@ if(userName == null) response.sendRedirect("./");
 %>
 <h3>Hi <%=userName %>, Login successful. Your Session ID=<%=sessionID %></h3>
 <br>
-<a href="/WEB-INF/index.jsp"><b>Logout</b></a>
+<a href="./"><b>Logout</b></a>
 </body>
 </html>
