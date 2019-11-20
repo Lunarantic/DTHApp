@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>DTHServices</display-name>
-  
-  <servlet>
-  	<servlet-name>Login</servlet-name>
-  	<jsp-file>/jsp/index.jsp</jsp-file>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>Login</servlet-name>
-  	<url-pattern>/</url-pattern>
-  </servlet-mapping>
-  
+
   <servlet>
   	<servlet-name>Main</servlet-name>
   	<servlet-class>servlets.Main</servlet-class>
@@ -20,16 +10,7 @@
   
   <servlet-mapping>
   	<servlet-name>Main</servlet-name>
-  	<url-pattern>/main</url-pattern>
+  	<url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>Welcome</servlet-name>
-  	<jsp-file>/jsp/LoginSucess.jsp</jsp-file>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>Welcome</servlet-name>
-  	<url-pattern>/welcome</url-pattern>
-  </servlet-mapping>
+
 </web-app>
