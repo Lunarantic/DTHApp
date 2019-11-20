@@ -1,8 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,13 +27,30 @@ public class Main extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		
+		if (action == null) {
+			request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		} else if (action.equals("login")) {
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			if(username.isEmpty() || password.isEmpty()) {
+				request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+			} else {
+				Cookie loginCookie = new Cookie("username",username);
+				loginCookie.setMaxAge(30*60); // 30 mins
+				response.addCookie(loginCookie);
+				request.getSession().getServletContext().getRequestDispatcher("/jsp/login_success.jsp").forward(request, response);
+			}
+		} else {
+			request.getSession().getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		}
 	}
-
 }
+
+
