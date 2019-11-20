@@ -1,5 +1,5 @@
 create table Customers(
-CustomerId NUMBER,
+CustomerId NUMBER primary key,
 FirstName VARCHAR(20),
 LastName VARCHAR(20),
 EmailId VARCHAR(20),

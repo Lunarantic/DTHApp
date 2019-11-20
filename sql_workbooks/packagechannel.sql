@@ -1,7 +1,6 @@
 CREATE table PackageChannels (
-	PackageID number NOT NULL,
-	ChannelID number NOT NULL,
-	CONSTRAINT PCID PRIMARY KEY (PackageID, ChannelID)
+	PackageID number NOT NULL foreign key,
+	ChannelID number NOT NULL foreign key,
 );
 
 drop table PackageChannels

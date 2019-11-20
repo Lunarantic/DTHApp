@@ -1,5 +1,5 @@
 
-create table retailers(id number,
+create table retailers(id number primary key,
                         name varchar(20),
                         stblimit number,
                          creditlimit number,
