@@ -27,52 +27,52 @@
 		%>
 				<tr>
 					<td><label>Customer Name</label></td> 
-					<td><input type="text" disabled="disabled"> <%= stbBuyPojo.getCustomerName()%></td>
+					<td><input type="text" disabled="disabled" value="<%= stbBuyPojo.getCustomerName()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Set Top Box Type</label></td> 
-					<td><input type="text" disabled="disabled"> <%= stbBuyPojo.getStbType()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getStbType()%>"> </td>
 				</tr>
 				
 				<tr>
 					<td><label>Set Top Box MAC ID</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getStbMacId()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getStbMacId()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Set Top Box Serial Number</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getStbSerialNumber()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getStbSerialNumber()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Set Top Box Price</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getStbPrice()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getStbPrice()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Installation Charge</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getInstallationCharge()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getInstallationCharge()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Deposit</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getDeposit()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getDeposit()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Discount</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getDiscount()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getDiscount()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Tax</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getTax()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getTax()%>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Amount Payable</label></td> 
-					<td><input type="text" disabled="disabled"><%= stbBuyPojo.getAmountPayable()%></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getAmountPayable()%>"></td>
 				</tr>
 			</table>
 		<!-- </form>-->
