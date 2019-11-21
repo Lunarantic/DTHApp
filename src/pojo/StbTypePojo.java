@@ -104,7 +104,7 @@ public class StbTypePojo {
 	
 	@Override
 	public String toString() {
-		return getId().toString();
+		return (id == null) ? "" : getId().toString();
 	}
 
 	public Integer getId() {

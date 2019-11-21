@@ -107,7 +107,7 @@
 		<br>
 		<div>
 			<form action = "./" method="post">
-				<input name="stbid" value="<%= stbTypePojo.getId() %>>" hidden/>
+				<input name="stbid" value="<%= stbTypePojo.getId() %>" hidden/>
 				<input name="action" value="buystb" hidden/>
 				<button type="submit" name = "stbbuy">Buy</button>
 			</form>
