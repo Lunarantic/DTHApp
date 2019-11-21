@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@ page import="util.*" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,8 +15,8 @@
 		Cookie[] cookies = request.getCookies();
 		if(cookies !=null){
 		for(Cookie cookie : cookies){
-			if(cookie.getName().equals("username")) userName = cookie.getValue();
 			if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+			userName = (String) SessionStorage.getSession(sessionID);
 		}
 		}
 		if(userName == null) response.sendRedirect("./");
