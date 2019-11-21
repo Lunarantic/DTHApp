@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+body {
+	background-color: white;
+	color:black;
+   /* background-color: #303030;
+    color: white; */
+    font-size: 30px;
+
+}
+h2 {
+	text-align: left;
+}
+
+.header {
+    margin-top: 0.5px;
+    text-align: center;
+    color :black;
+   /* color: white; */
+    font-size: 15px;
+}
+
+.container {
+      margin-top: 80PX;
+      margin-right: 100PX;
+     margin-left: 300px;
+    }
