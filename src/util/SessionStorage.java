@@ -14,4 +14,9 @@ public class SessionStorage {
 	public static Object getSession(String key) {
 		return store.get(key);
 	}
+	
+	public static boolean removeSession(String key) {
+		if (key == null) return false;
+		return store.remove(key) != null;
+	}
 }
