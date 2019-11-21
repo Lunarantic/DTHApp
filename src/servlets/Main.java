@@ -61,7 +61,7 @@ public class Main extends HttpServlet {
 			if (target == null) {
 				serve("/jsp/login_success.jsp", request, response);
 			} else if (target.equals("buystb")) {
-				serve("/jsp/buystb.jsp", request, response);
+				serve("/jsp/selectSTB.jsp", request, response);
 			} else if (target.equals("buypkg")) {
 				serve("/jsp/buypackage.jsp", request, response);
 			} else if (target.equals("viewbills")) {
@@ -69,6 +69,10 @@ public class Main extends HttpServlet {
 			} else {
 				serve("/jsp/login_success.jsp", request, response);
 			}
+		} else if (action.equals("buystb")) {
+			serve("/jsp/buystb.jsp", request, response);
+		} else if (action.equals("selectstb")) {
+			serve("/jsp/selectSTB.jsp", request, response);
 		} else if (action.equals("logout")) {
 			serve("/jsp/index.jsp", request, response);
 		} else {
