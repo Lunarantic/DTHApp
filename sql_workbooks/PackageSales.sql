@@ -14,4 +14,11 @@ INSERT INTO PACKAGESALES values ('125', '025', '05', '07-Mar-20', '08-Mar-22');
 INSERT INTO PACKAGESALES values ('126', '026', '06', '03-Mar-20', '04-Mar-22');
 
 
+INSERT INTO PACKAGESALES values ('127', '5', '1', '04-Mar-20', '05-Mar-22');
+INSERT INTO PACKAGESALES values ('128', '4', '2', '02-Mar-20', '03-Mar-22');
+INSERT INTO PACKAGESALES values ('129', '3', '3', '05-Mar-20', '06-Mar-22');
+INSERT INTO PACKAGESALES values ('130', '2', '4', '08-Mar-20', '07-Mar-22');
+INSERT INTO PACKAGESALES values ('132', '6', '5', '07-Mar-20', '08-Mar-22');
+INSERT INTO PACKAGESALES values ('131', '1', '6', '03-Mar-20', '04-Mar-22');
+
 select * from Packagesales;

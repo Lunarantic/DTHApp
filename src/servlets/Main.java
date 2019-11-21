@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controllers.PackageUtil;
 import util.DatabaseUtil;
 
 public class Main extends HttpServlet {
@@ -69,6 +71,21 @@ public class Main extends HttpServlet {
 			} else {
 				serve("/jsp/login_success.jsp", request, response);
 			}
+		} else if (action.equals("buypkg")) {
+			//
+			System.out.println("ddd");
+			String pkgID = request.getParameter("pkgID");
+			String cusID = request.getParameter("cusID");
+			System.out.println(pkgID);
+			System.out.println(cusID);
+			PackageUtil pkg = new PackageUtil();
+			try {
+				pkg.purchasePkg(pkgID, cusID);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			serve("/jsp/buypackage.jsp", request, response);
 		} else if (action.equals("logout")) {
 			serve("/jsp/index.jsp", request, response);
 		} else {

@@ -52,12 +52,47 @@ public class PackageUtil {
 		
 		return list;
 	}
+	
+	public List<List<String>> getCustomerPkg(int customerID) throws SQLException {
+		List<List<String>> list = new ArrayList<>();
+		String sql = "select * from Packages p, PackageSales ps where ps.customer_id=? and p.id = ps.Package_id";
+		PreparedStatement st = DatabaseUtil.getConnection().prepareStatement(sql);
+		st.setInt(1, customerID);
+		ResultSet rs = st.executeQuery();
+		while(rs.next()) {
+			List<String> pkg = new ArrayList<>();
+			pkg.add(rs.getString("name"));
+			pkg.add(rs.getString("category"));
+			pkg.add(rs.getString("Start_date"));
+			pkg.add(rs.getString("Package_id"));
+			list.add(pkg);
+		}
+		return list;
+		
+	}
+	
+//	public void addToCart(String pkgID, String customerID) {
+//		String sql = "select * from Packages p, PackageSales ps where ps.customer_id=? and p.id = ps.Package_id";
+//		PreparedStatement st = DatabaseUtil.getConnection().prepareStatement(sql);
+//		st.setInt(1, customerID);
+//		ResultSet rs = st.executeQuery();
+//		while(rs.next()) {
+//			List<String> pkg = new ArrayList<>();
+//			pkg.add(rs.getString("name"));
+//			pkg.add(rs.getString("category"));
+//			pkg.add(rs.getString("Start_date"));
+//			pkg.add(rs.getString("Package_id"));
+//			list.add(pkg);
+//		}
+//	}
 	public void getAllPkgs(int type) {
 		
 	}
 	
-	public void purchasePkg(String pkg) {
-		
+	public void purchasePkg(String pkgid, String cusid) throws SQLException {
+		String sql = "select * from Packages p, PackageSales ps where ps.customer_id=? and p.id = ps.Package_id";
+		PreparedStatement st = DatabaseUtil.getConnection().prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
 	}
 	
 }
