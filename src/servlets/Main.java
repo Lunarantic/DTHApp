@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controller.LoginValidation;
 import util.DatabaseUtil;
+import util.SessionStorage;
 
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,19 +44,19 @@ public class Main extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if (action == null) {
-			serve("/jsp/index.jsp", request, response);
-		} else if (action.equals("login")) {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			
-			if(username.isEmpty() || password.isEmpty()) {
-				serve("/jsp/index.jsp", request, response);
-			} else {
-				Cookie loginCookie = new Cookie("username",username);
-				loginCookie.setMaxAge(30*60); // 30 mins
-				response.addCookie(loginCookie);
+			if (SessionStorage.getSession(request.getSession().getId()) != null) {
 				serve("/jsp/login_success.jsp", request, response);
+			} else {
+				serve("/jsp/index.jsp", request, response);
 			}
+		} else if (action.equals("login")) {
+			if(LoginValidation.checkValidUser(request, response)) {
+				serve("/jsp/login_success.jsp", request, response);
+			} else {
+				serve("/jsp/index.jsp", request, response);
+			}
+		} else if (SessionStorage.getSession(request.getSession().getId()) == null) {
+			serve("/jsp/index.jsp", request, response);
 		} else if (action.equals("home")) {
 			String target = request.getParameter("target");
 			
@@ -70,6 +72,7 @@ public class Main extends HttpServlet {
 				serve("/jsp/login_success.jsp", request, response);
 			}
 		} else if (action.equals("logout")) {
+			LoginValidation.Logout(request, response);
 			serve("/jsp/index.jsp", request, response);
 		} else {
 			serve("/jsp/index.jsp", request, response);
