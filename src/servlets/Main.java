@@ -60,6 +60,8 @@ public class Main extends HttpServlet {
 			} else {
 				serve("/jsp/index.jsp", request, response);
 			}
+		} else if (SessionStorage.getSession(request.getSession().getId()) == null) {
+			serve("/jsp/index.jsp", request, response);
 		} else if (action.equals("home")) {
 			String target = request.getParameter("target");
 			
