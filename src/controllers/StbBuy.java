@@ -67,7 +67,7 @@ public class StbBuy {
 		if (stbTypePojo.getStbType().equalsIgnoreCase(s1))
 		{
 			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
-			tax = (12/100) * amount;
+			tax = (12/100.0) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
@@ -75,7 +75,7 @@ public class StbBuy {
 		else if(stbTypePojo.getStbType().equalsIgnoreCase(s2))
 		{
 			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
-			tax = (12/100) * amount;
+			tax = (12/100.0) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
@@ -83,7 +83,7 @@ public class StbBuy {
 		else if(stbTypePojo.getStbType().equalsIgnoreCase(s3))
 		{
 			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
-			tax = (12/100) * amount;
+			tax = (12/100.0) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
@@ -91,7 +91,7 @@ public class StbBuy {
 		else if(stbTypePojo.getStbType().equalsIgnoreCase(s4))
 		{
 			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
-			tax = (12/100) * amount;
+			tax = (12/100.0) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
@@ -145,7 +145,7 @@ public class StbBuy {
 			
 			query =	"update customers set amount=? where customerid=?";
 			ps = DatabaseUtil.getConnection().prepareStatement(query);
-			ps.setDouble(1, amount);
+			ps.setDouble(1, (cus.getAmount()-amount));
 			ps.setInt(2, cus.getId());
 			
 			update = ps.executeUpdate();
