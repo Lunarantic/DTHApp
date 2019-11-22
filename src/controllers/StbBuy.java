@@ -145,9 +145,12 @@ public class StbBuy {
 			
 			query =	"update customers set amount=? where customerid=?";
 			ps = DatabaseUtil.getConnection().prepareStatement(query);
+			ps.setDouble(1, amount);
+			ps.setInt(2, cus.getId());
+			
 			update = ps.executeUpdate();
 			
-			if (update <= 0) return false; // NULL the stb
+			if (update <= 0) return false; // TODO NULL the stb marked
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
