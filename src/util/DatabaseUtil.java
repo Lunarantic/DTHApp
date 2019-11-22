@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.istack.internal.logging.Logger;
+
 import config.Config;
 
 public class DatabaseUtil {
@@ -31,8 +33,9 @@ public class DatabaseUtil {
 	public static void setConnection() {
 		try {
 			connection = DriverManager.getConnection(Config.DBURL, Config.DBUSER, Config.PASSWORD);
+			Logger.getLogger(DatabaseUtil.class).info("Connection to Database successful.");
 		} catch (SQLException e) {
-			System.err.println("Connection not formed.");
+			System.err.println("Connection not formed.\nCheck you database configuration.");
 		}
 	}
 	
@@ -40,6 +43,7 @@ public class DatabaseUtil {
 		if (connection != null) {
 			try {
 				connection.close();
+				Logger.getLogger(DatabaseUtil.class).info("Connection to Database is now closed.");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
