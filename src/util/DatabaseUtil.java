@@ -174,8 +174,8 @@ public class DatabaseUtil {
 		
 		while (resultSet.next()) {
 			initargs = new Object[cls.length];
-			for (int j = 1; j <= cls.length; ++j) {
-				initargs[j-1] = resultSet.getObject(j, cls[j-1]);
+			for (int j = 0; j < cls.length; ++j) {
+				initargs[j] = resultSet.getObject(j+1, cls[j]);
 			}
 			res.add(constructor.newInstance(initargs));
 		}
