@@ -1,130 +1,157 @@
 package controllers;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sun.istack.internal.logging.Logger;
+
+import pojo.Customer;
 import pojo.StbBuyPojo;
 import pojo.StbTypePojo;
+import servlets.Main;
 import util.Cache;
 import util.DatabaseUtil;
 
 public class StbBuy {
 
-	public static StbBuyPojo getStbBuyDetails(String fName, String lName, String stbType, String stbid) throws SQLException
+	public static StbBuyPojo getStbBuyDetails(Customer customer, Integer stbid) throws SQLException
 	{
+		double deposit = 0; // TODO
+		
 		PreparedStatement ps = null;
-		//Connection con = null;
 		ResultSet rs = null;
 		
-		String retailor = "select ReatailorId from customers where FirstName = 'dan' AND LastName = 'smith'";
-		ps = DatabaseUtil.getConnection().prepareStatement(retailor);
-		int retailorId = ps.executeUpdate();
-		System.out.println(retailorId);
-		
-		String retailorCountStb = "select name from retailers where id = "+retailorId;
-		ps = DatabaseUtil.getConnection().prepareStatement(retailorCountStb);
-		int stbCount = ps.executeUpdate();
-		System.out.println(stbCount);
-		
-		String query1="select FirstName, LastName from Customers where FirstName = 'dan' AND LastName = 'smith'";
-		ps = DatabaseUtil.getConnection().prepareStatement(query1);
-		
-		rs = ps.executeQuery();
-		
-		String namef = null, namel = null, name;
-		while(rs.next())
-		{
-			namef = rs.getString(1);
-			namel = rs.getString(2);
-		}
-		
-		name = namef.concat(namel);
-		
-		StbBuyPojo stbBuyPojo = new StbBuyPojo();
-		
-		//stbBuyPojo.setCustomerName(name);
-		
-		StbTypePojo stbTypePojo = Cache.get(stbid);
-	//	stbTypePojo.setStbType("standard");
-		String sType = stbTypePojo.getStbType();
-	//	stbTypePojo.setPrice(4000);
-		long sPrice = stbTypePojo.getPrice();
-	//	stbTypePojo.setRefundableAmount(1000);
-		long sDeposit = stbTypePojo.getRefundableAmount();
-	//	stbTypePojo.setInstallationCharges(150);
-		long sInstall = stbTypePojo.getInstallationCharges();
-		
-		String query3 = "select SerialNo, MACID from SETUPBOXINVENTORY where TypeID =1 AND Status = 0";
+		String query3 = "select serialno, macid, setupboxid"
+				+ " from setupboxinventory"
+				+ " where typeid=? and customerid is null and retailerid=?";
 		ps = DatabaseUtil.getConnection().prepareStatement(query3);
+		
+		Logger.getLogger(StbBuy.class).info("retailer :: " + customer.getRetailerID());
+		Logger.getLogger(StbBuy.class).info("customer :: " + customer.getId());
+		Logger.getLogger(StbBuy.class).info("stbid :: " + stbid);
+		
+		ps.setInt(1, stbid);
+		ps.setInt(2, customer.getRetailerID());
+		
 		rs = ps.executeQuery();
-		
-		String serialNo = null, macid = null;
-		
+
+		StbBuyPojo stbBuyPojo = null;
 		if(rs.next())
 		{
-			serialNo = rs.getString(1);
-			macid = rs.getString(2);
+			stbBuyPojo = new StbBuyPojo();
+			stbBuyPojo.setStbSerialNumber(rs.getString(1));
+			stbBuyPojo.setStbMacId(rs.getString(2));
+			stbBuyPojo.setId(rs.getInt(3));
+		} else {
+			DatabaseUtil.close(rs, ps);
+			return stbBuyPojo;
 		}
+		DatabaseUtil.close(rs, ps);
 		
-		stbBuyPojo.setCustomerName(name);
-		stbBuyPojo.setStbType(sType);
-		stbBuyPojo.setStbMacId(macid);
-		stbBuyPojo.setStbSerialNumber(serialNo);
-		stbBuyPojo.setStbPrice(sPrice);
-		stbBuyPojo.setInstallationCharge(sInstall);
-		stbBuyPojo.setDeposit(sDeposit);
+		StbTypePojo stbTypePojo = Cache.get(stbid);
+		
+		stbBuyPojo.setCustomerName(customer.getName());
+		stbBuyPojo.setStbType(stbTypePojo.getStbType());
+		stbBuyPojo.setTypePojo(stbTypePojo);
 		
 		String s1 = "Standard";
 		String s2 = "High Definition (HD)";
 		String s3 = "High Definition Recorder HD+";
 		String s4 = "IPTV";
-		long discount = 0;
-		long tax = 0;
-		long amount = 0;
-		long tamount =0;
+		double discount = 0;
+		double tax = 0;
+		double amount = 0;
+		double tamount =0;
 		
-		if (stbType.equalsIgnoreCase(s1))
+		if (stbTypePojo.getStbType().equalsIgnoreCase(s1))
 		{
-			discount = (2/100) * sPrice;
-			stbBuyPojo.setDiscount(discount);
-			amount = (sPrice + sInstall + sDeposit - discount);
+			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
 			tax = (12/100) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
 		}
-		else if(stbType.equalsIgnoreCase(s2))
+		else if(stbTypePojo.getStbType().equalsIgnoreCase(s2))
 		{
-			discount = (long) ((2.2/100) * sPrice);
-			stbBuyPojo.setDiscount(discount);
-			amount = (sPrice + sInstall + sDeposit - discount);
+			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
 			tax = (12/100) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
 		}
-		else if(stbType.equalsIgnoreCase(s3))
+		else if(stbTypePojo.getStbType().equalsIgnoreCase(s3))
 		{
-			discount = (4/100) * sPrice;
-			stbBuyPojo.setDiscount(discount);
-			amount = (sPrice + sInstall + sDeposit - discount);
+			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
 			tax = (12/100) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
 		}
-		else if(stbType.equalsIgnoreCase(s4))
+		else if(stbTypePojo.getStbType().equalsIgnoreCase(s4))
 		{
-			discount = (10/100) * sPrice;
-			stbBuyPojo.setDiscount(discount);
-			amount = (sPrice + sInstall + sDeposit - discount);
+			amount = (stbTypePojo.getPrice() + stbTypePojo.getInstallationCharges() + deposit - discount);
 			tax = (12/100) * amount;
 			stbBuyPojo.setTax(tax);
 			tamount = tax + amount;
 			stbBuyPojo.setAmountPayable(tamount);
 		}
 		return stbBuyPojo;
+	}
+	
+	public static boolean hasEnoughBalance(Customer cus, Double amount, Integer stbid) {
+		Logger.getLogger(Main.class).info("cusID " + cus.getId());
+		Logger.getLogger(Main.class).info("amount to check " + amount);
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String query = "select amount from customers where customerid=?";
+		try {
+			ps = DatabaseUtil.getConnection().prepareStatement(query);
+			ps.setInt(1, cus.getId());
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				cus.setAmount(rs.getDouble(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.close(rs, ps);
+		}
+		
+		return cus.getAmount() >= amount;
+	}
+	
+	public static boolean buySTBForCustomer(Customer cus, Double amount, Integer stbid) {
+		Logger.getLogger(Main.class).info("Marking stb to buy " + stbid);
+		
+		PreparedStatement ps = null;
+		
+		String query = "update setupboxinventory set customerid=? where setupboxid=?"; 
+		
+		try {
+			ps = DatabaseUtil.getConnection().prepareStatement(query);
+			ps.setInt(1, cus.getId());
+			ps.setInt(2, stbid);
+			
+			int update = ps.executeUpdate();
+			
+			if (update <= 0) return false;
+			
+			DatabaseUtil.close(null, ps);
+			
+			query =	"update customers set amount=? where customerid=?";
+			ps = DatabaseUtil.getConnection().prepareStatement(query);
+			update = ps.executeUpdate();
+			
+			if (update <= 0) return false; // NULL the stb
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

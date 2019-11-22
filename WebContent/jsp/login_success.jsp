@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@ page import="util.*, pojo.*" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,18 +10,18 @@
 	</head>
 	<body>
 		<%
-		String userName = null;
+		Customer user = null;
 		String sessionID = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies !=null){
 		for(Cookie cookie : cookies){
-			if(cookie.getName().equals("username")) userName = cookie.getValue();
 			if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+			user = SessionStorage.getSession(sessionID);
 		}
 		}
-		if(userName == null) response.sendRedirect("./");
+		if(user == null) response.sendRedirect("./");
 		%>
-		<h3>Hi <%=userName %></h3>
+		<h3>Hi <%=user.getName() %></h3>
 		<br>
 		<h3>Menu</h3>
 		<form action="./" method="post">

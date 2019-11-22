@@ -10,12 +10,12 @@ public class Cache {
 
 	private static Map<String, StbTypePojo> stbs = new HashMap<>();
 	
-	public static StbTypePojo get(String id) {
-		StbTypePojo stbTypePojo = stbs.get(id);
+	public static StbTypePojo get(Integer id) {
+		StbTypePojo stbTypePojo = stbs.get(id.toString());
 		if (stbTypePojo != null)
 			return stbTypePojo;
 		
-		stbTypePojo = (StbTypePojo) StbSearch.getSTBType(Integer.parseInt(id));
+		stbTypePojo = (StbTypePojo) StbSearch.getSTBType(id);
 		
 		return stbTypePojo;
 	}

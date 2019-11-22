@@ -10,7 +10,13 @@ public class StbSearch {
 	
 	public static StbTypePojo getSTBType(String paymentType, String stbType)
 	{
-		String query = "select * from SetUpBoxTypesBox where billingType=? AND stbtype=?";
+		String query = "select"
+				+ " s.ID, stbtype, features,"
+				+ " dimensions, price, installationCharges,"
+				+ " upgrationCharges, discount, b.billingType,"
+				+ " refundableAmount"
+				+ " from SetUpBoxTypesBox s inner join billingtype b on s.billingType=b.id"
+				+ " where b.billingType=? AND stbtype=?";
 		
 		Object[] paras = new Object[2];
 		paras[0] = paymentType;
@@ -31,7 +37,13 @@ public class StbSearch {
 	
 	public static StbTypePojo getSTBType(Integer stbid)
 	{
-		String query = "select * from SetUpBoxTypesBox where id=?";
+		String query = "select"
+				+ " s.ID, stbtype, features,"
+				+ " dimensions, price, installationCharges,"
+				+ " upgrationCharges, discount, b.billingType,"
+				+ " refundableAmount"
+				+ " from SetUpBoxTypesBox s inner join billingtype b on s.billingType=b.id"
+				+ " where s.id=?";
 		
 		Object[] paras = new Object[2];
 		paras[0] = stbid;

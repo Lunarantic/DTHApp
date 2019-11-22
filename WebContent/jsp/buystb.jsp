@@ -9,22 +9,22 @@
 <title>Buy STB</title>
 </head>
 	
-	<body>
-		<div>
-			<p>
-			<h3>Please check the details before buying</h3>
-			</p>
-		</div>
+<body>
+	<div>
+		<p>
+		<h3>Please check the details before buying</h3>
+		</p>
+	</div>
+	
+	<br>
+	<form action="./" method="post">
+	<div>
 		
-		<br>
-		<form action="/DTHServices/select">
-		<div>
-		
-			<table>
+		<table>
 			<%
-		StbBuyPojo stbBuyPojo = StbBuy.getStbBuyDetails("dan", "smith", "standard", request.getParameter("stbid"));
-		//(request.getParameter("paymentMethod"), request.getParameter("stbtype")); 
-		%>
+			StbBuyPojo stbBuyPojo = StbBuy.getStbBuyDetails(SessionStorage.getSession(request.getSession().getId()), Integer.parseInt(request.getParameter("stbid")));
+			if (stbBuyPojo != null) {
+			%>
 				<tr>
 					<td><label>Customer Name</label></td> 
 					<td><input type="text" disabled="disabled" value="<%= stbBuyPojo.getCustomerName()%>"></td>
@@ -47,12 +47,12 @@
 				
 				<tr>
 					<td><label>Set Top Box Price</label></td> 
-					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getStbPrice()%>"></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getTypePojo().getPrice() %>"></td>
 				</tr>
 				
 				<tr>
 					<td><label>Installation Charge</label></td> 
-					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getInstallationCharge()%>"></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getTypePojo().getInstallationCharges() %>"></td>
 				</tr>
 				
 				<tr>
@@ -62,7 +62,7 @@
 				
 				<tr>
 					<td><label>Discount</label></td> 
-					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getDiscount()%>"></td>
+					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getTypePojo().getDiscount()%>"></td>
 				</tr>
 				
 				<tr>
@@ -75,15 +75,20 @@
 					<td><input type="text" disabled="disabled" value = "<%= stbBuyPojo.getAmountPayable()%>"></td>
 				</tr>
 			</table>
-		<!-- </form>-->
 		</div>
 		
 		<br> 
 		
 		<div>
+			<input name="amount" value="<%= stbBuyPojo.getAmountPayable() %>" hidden>
+			<input name="action" value ="cnfstb" hidden>
+			<input name="stbid" value="<%= stbBuyPojo.getTypePojo().getId() %>" hidden>
 			<button type = "submit">Confirm</button>
 		</div>
-		</form>
+	</form>
+	<% } else {%>
+		<h1>Out of Stock</h1>
+	<%} %>
 	<form action="./" method="post">
 		<input name="action" value ="home" hidden>
 		<button type="submit">Back</button>
