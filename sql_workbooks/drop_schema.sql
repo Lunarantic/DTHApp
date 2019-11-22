@@ -5,3 +5,4 @@ drop table SetUpBoxTypesBox;
 drop table PackageChannels;
 drop table PACKAGES;
 drop table CHANNELS;
+drop table customers;
