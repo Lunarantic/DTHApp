@@ -10,7 +10,7 @@ create table Customers(
 );
 
 
-INSERT INTO CUSTOMERS VALUES(1, 'john', 'cena', 'johncena@mail.com', 'Virginia', 'jona', 1, 10000.0);
+INSERT INTO CUSTOMERS VALUES(1, 'john', 'cena', 'johncena@mail.com', 'Virginia', 'jona', 1, 1000.0);
 
 INSERT INTO CUSTOMERS VALUES(2, 'dan', 'smith', 'dansmith@mail.com', 'Milford', 'dath', 2, 15000.0);
 INSERT INTO CUSTOMERS VALUES(3, 'peter', 'pan', 'peterpan@mail.com', 'Delaware', 'pean', 3, 11000.0);
