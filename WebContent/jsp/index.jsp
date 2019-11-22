@@ -24,10 +24,16 @@
 			.login_section{
 				background-color:rgba(255,255,255,0.5);
 				border-radius: 5px;
-				padding: 10% 10%;
+				  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				padding: 5% 5%;
 			}
 			.logo_img{
 				text-align: center;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.logo_img img {
+				width: 50%
 			}
 			
 		</style>
@@ -40,11 +46,10 @@
 			<div class="row align-items-center" style="height: 100%;">
 				<div class="col-4">
 					<div class="login_section container-fluid">
-						<div class="row logo_img">
-						<% System.out.println(pageContext); %>
-							<img src="https://github.com/Lunarantic/DTHApp/raw/BuyPackagesFlow/WebContent/images/dthlogo.png" />
+						<div class="row logo_img justify-content-center">
+							<img src="https://github.com/Lunarantic/DTHApp/raw/BuyPackagesFlow/WebContent/images/dthlogo2.png" />
 						</div>	
-						<div class="row login_form">
+						<div class="row login_form justify-content-center">
 							<form action="./" method = "post">
 								<!-- <label>Username</label>
 								<input type = "text" name = "username">
