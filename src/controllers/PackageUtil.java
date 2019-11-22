@@ -53,8 +53,33 @@ public class PackageUtil {
 		
 	}
 	
-	public void purchasePkg(String pkg) {
-		
+	public void purchasePkg(String pkgid, String cusid) throws SQLException {
+		String sql = "select * from Packages p, PackageSales ps where ps.customer_id=? and p.id = ps.Package_id";
+		PreparedStatement st = DatabaseUtil.getConnection().prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
 	}
 	
+	public List<List<String>> getCustomerPkg(int customerID) throws SQLException {
+		List<List<String>> list = new ArrayList<>();
+		
+		String sql = "select name, category, start_date, package_id"
+				+ " from Packages p, PackageSales ps"
+				+ " where ps.customer_id=? and p.id = ps.Package_id";
+		
+		PreparedStatement st = DatabaseUtil.getConnection().prepareStatement(sql);
+		st.setInt(1, customerID);
+		
+		ResultSet rs = st.executeQuery();
+		while(rs.next()) {
+			List<String> pkg = new ArrayList<>();
+			pkg.add(rs.getString(1));
+			pkg.add(rs.getString(2));
+			pkg.add(rs.getString(3));
+			pkg.add(rs.getString(4));
+			list.add(pkg);
+		}
+		
+		DatabaseUtil.close(rs, st);
+		return list;
+	}
 }
