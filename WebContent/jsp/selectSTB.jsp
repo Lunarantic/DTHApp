@@ -121,6 +121,12 @@
 	<% }
 	} %>
 	
+		<div>
+			<form action="./" method="post">
+				<input name="action" value ="home" hidden>
+				<button type="submit">Back</button>
+			</form>
+		</div>
 		
 	</body>
 </html>
